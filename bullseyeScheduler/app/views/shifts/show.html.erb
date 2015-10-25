@@ -1,0 +1,59 @@
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h1 class="panel-title">View Shift - #<%= @shift.id %></h1>
+	</div>
+	<div class="panel-body">
+	<table class="table">
+	<tr class="panel panel-danger">
+		<td class="panel-heading">
+			<strong>Date:</strong>
+		</td>
+		<td>
+			<%= @shift.shift_date %>
+		</td>
+	</tr>
+
+	<tr class="panel panel-danger">
+		<td class="panel-heading">
+			<strong>Start:</strong>
+		</td>
+		<td>
+			<%= @shift.start.strftime('%H:%M') %>
+		</td>
+	</tr>
+	<tr class="panel panel-danger">
+		<td class="panel-heading">
+			<strong>End:</strong>
+		</td>
+		<td>
+			<%= @shift.end.strftime('%H:%M') %>
+		</td>
+	</tr>
+	<tr class="panel panel-danger">
+		<td class="panel-heading">
+				<strong>Total:</strong>
+		</td>
+		<td>
+			<%= @shift.total %>
+		</td>
+	</tr>
+	<tr class="panel panel-danger">
+		<td class="panel-heading">
+			<strong>User:</strong>
+		</td>
+		<td>
+			<%= User.find(@shift.user_id).full_name %>
+		</td>
+	<tr class="panel panel-danger">
+		<td class="panel-heading">
+			<strong>Status:</strong>
+		</td>
+		<td>
+			<%= @shift.current_status %>
+		</td>
+	</table>
+
+<%= link_to 'Edit Shift', edit_shift_path(@shift), :class=>"btn btn-default" %>
+<%= link_to 'Previous Page', shifts_path, :class=>"btn btn-default" %>
+</div>
+</div>

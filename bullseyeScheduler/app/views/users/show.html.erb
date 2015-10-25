@@ -34,7 +34,7 @@
 				<strong>Role:</strong>
 			</td>
 			<td>
-				<%= @user.role_id %>
+				<%= Role.find(@user.role_id).name %>
 			</td>
 		</tr>
 		<tr class="panel panel-danger">
@@ -42,7 +42,11 @@
 				<strong>HomeStore:</strong>
 			</td>
 			<td>
-				<%= @user.home_store_id %>
+			<% if @user.home_store_id == 0 %>
+				N/A
+			<% else %>
+				<%= Hash.from_xml(Net::HTTP.get(URI.parse("http://api.target.com/v2/location/#{@user.home_store_id}?key=#{$key}")))["Location"]["Name"] %> 
+			<% end %>
 		</tr>
 		<tr class="panel panel-danger">
 			<td class="panel-heading">

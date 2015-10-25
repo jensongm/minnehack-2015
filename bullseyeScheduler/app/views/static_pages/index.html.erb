@@ -11,24 +11,39 @@
 	</div>
 </div>
 <hr> 
-<div class="btn-group">
-	<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Choose HomeStore</button>
-  <ul class="dropdown-menu scrollable-menu" role="menu">
-		<% @state.each do |s| %> 
-			<li><%= link_to s,"/users/#{current_user.id}/home/#{s}" %> </li>
-		<% end %> 
-	</ul>
-</div>
 
-<p>You've reached the homepage for Bullseye Scheduler!</p>
 <div class="row">
 	<div class="col-sm-6 well">
-		<h3>Your Shifts</h3>
+		<h3>Your Shifts - <%= @shifts.length %></h3>
 		<hr>
-		<% if current_user.shift.length <= 0 %> 
+		<% if @shifts.length <= 0 %> 
 			<h5 class="alert alert-danger">No Shifts Found</h5> 
 		<% else %> 
-			
+				<% @shifts.each do |shift| %>
+						<% if shift.current_status == "General" %>
+						<div class= "text-success">
+						<%= link_to "#{shift.shift_date.strftime('%F')}			#{shift.start.strftime('%H:%M')}-#{shift.end.strftime('%H:%M')}", "/shifts/#{shift.id}" %>
+						<br/>Current Status: <%= shift.current_status %> 
+						<% elsif shift.current_status == "Open" %>
+						<div class= "text-primary">
+						<%= link_to "#{shift.shift_date.strftime('%F')}			#{shift.start.strftime('%H:%M')}-#{shift.end.strftime('%H:%M')}", "/shifts/#{shift.id}" %>
+						<br/>Current Status: <%= shift.current_status %> 
+						<% elsif shift.current_status == "Pending" %>
+						<div class= "text-warning">
+						<%= link_to "#{shift.shift_date.strftime('%F')}			#{shift.start.strftime('%H:%M')}-#{shift.end.strftime('%H:%M')}", "/shifts/#{shift.id}" %>
+						<br/>Current Status: <%= shift.current_status %> 
+						<% elsif shift.current_status == "Closed" %>
+						<div class= "text-danger">
+						<%= link_to "#{shift.shift_date.strftime('%F')}			#{shift.start.strftime('%H:%M')}-#{shift.end.strftime('%H:%M')}", "/shifts/#{shift.id}" %>
+						<br/>Current Status: <%= shift.current_status %> 
+						<% elsif shift.current_status == "Finalized" %>
+						<div>
+						<%= link_to "#{shift.shift_date.strftime('%F')}			#{shift.start.strftime('%H:%M')}-#{shift.end.strftime('%H:%M')}", "/shifts/#{shift.id}" %>
+						<br/>Current Status: <%= shift.current_status %> 
+						<% end %>
+						</div>
+						<br />
+				<% end %> 
 		<% end %> 
 
 	</div>
@@ -45,7 +60,21 @@
 			<br>
 			<u>Phone</u>
 			<br>
-			<%= @data["Location"]["TelephoneNumber"] ? @data["Location"]["TelephoneNumber"].first["PhoneNumber"] : "N/A" %>
-		<% end %> 
+			<% if @data["Location"]["TelephoneNumber"].kind_of?(Array)%>
+				<%= @data["Location"]["TelephoneNumber"] ? @data["Location"]["TelephoneNumber"].first["PhoneNumber"] : "N/A" %>
+			<% else %> 
+				<%= @data["Location"]["TelephoneNumber"] ? @data["Location"]["TelephoneNumber"]["PhoneNumber"] : "N/A" %>
+			<% end %>
+		<% end %>
+		<p>
+		 	<div class="btn-group">
+				<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Choose HomeStore</button>
+			  <ul class="dropdown-menu scrollable-menu" role="menu">
+					<% @state.each do |s| %> 
+						<li><%= link_to s,"/users/#{current_user.id}/home/#{s}" %> </li>
+					<% end %> 
+				</ul>
+		</div>
+		</p>
 	</div>
 </div>

@@ -1,11 +1,17 @@
 Rails.application.routes.draw do
 
+  resources :shifts do
+		get 'takeShifts' => 'shifts#takeShift'
+	end  
   resources :users do
 		get '/home/:location' => 'users#homestore'
 		get '/setstore' => 'users#sethomestore'
 	end 
   root 'static_pages#index'
+
+	get 'tracking/hours'
   get 'static_pages/index'
+  get 'static_pages/openShifts'
   get 'static_pages/about'
   get 'static_pages/contact'
 

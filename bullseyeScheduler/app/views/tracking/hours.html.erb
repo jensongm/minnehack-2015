@@ -1,0 +1,32 @@
+<h1>Hours This year for: <%= @user.full_name%></h1>
+<hr>
+<canvas id="hours_track" width="400" height="400"></canvas>
+<% total = Shift.where(user_id:@user.id).map{|x| x.total} %>
+<% total = total.inject{|sum,x| sum + x } %>
+<div id="hours"class="well">
+
+</div>
+<script>
+	var hourData = {
+		labels : ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+		datasets : [
+			{
+				fillColor: "rgba(228,185,185,1)",
+				strokeColor : "#D12828",
+				pointColor : "#fff",
+				pointStrokeColor : "#D12828",
+				data : [160,156,120,172,145,147,120,146,157,<%= total %> ,0,0]
+			}
+		]
+	};
+
+	var ctx = document.getElementById("hours_track").getContext('2d');
+	new Chart(ctx).Line(hourData);
+	data = [160,156,120,172,145,147,120,146,157,<%= total.to_i%>,0,0];
+	var totalHours = data.reduce(function(a, b) {
+		return a + b;
+	});	
+	$('#hours').html("Total Hours: "+ totalHours);
+
+</script>
+

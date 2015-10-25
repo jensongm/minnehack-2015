@@ -3,7 +3,8 @@
 <head>
   <title>Bullseye Scheduler</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+	<%= csrf_meta_tags %>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -29,8 +30,17 @@
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
 						<% if current_user %>
-						<li><%= link_to "Log Out", logout_path %></li>
-						<li><%= link_to "Edit Profile", "/users/#{current_user.id}/edit" %></li>
+							<% if current_user.role.id == 1 %> 
+							<li><%= link_to "Log Out", logout_path %></li>
+							<li><%= link_to "Edit Profile", "/users/#{current_user.id}/edit" %></li>
+							<li><%= link_to "Find Open Shifts", static_pages_openShifts_path %></li>
+							<li><%= link_to "Track My Hours", tracking_hours_path %></li>
+							<% else %>
+							<li><%= link_to "Log Out", logout_path %></li>
+							<li><%= link_to "View Employees", users_path %></li>
+							<li><%= link_to "Assign a Shift", new_shift_path %></li>
+							<li><%= link_to "View Current Shifts", shifts_path %></li>
+							<% end %>
 						<% else %>
 						<li><%# link_to "Log In", login_path %></li>
 						<% end %>
@@ -49,7 +59,14 @@
 		<div class="container theme-showcase" role="main">
 			<%= yield %>
 		</div>
-
+						<% if current_user %>
+		      <!-- Site footer -->
+      <footer class="footer">
+        <p>&copy; MinneHack 2015</p>
+        Haley Muotka<br>
+        John Stupka<br>
+        Gabe Jenson
+      </footer>
+			<% end %>
 </body>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
 </html>

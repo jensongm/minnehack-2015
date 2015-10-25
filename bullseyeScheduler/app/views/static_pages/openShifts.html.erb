@@ -1,0 +1,27 @@
+<h1>Welcome to the Open Shift Board</h1>
+<hr> 
+
+<% if @shifts.length <= 0 %> 
+<div class="alert alert-danger">
+	<h3>There are currently no Open Shifts</h3>
+</div>
+<% else %> 
+	<div class ="row">
+	<% @shifts.each do |shift| %>
+		<div class="col-sm-4">
+						<%= link_to "#{shift.shift_date.strftime('%F')}			#{shift.start.strftime('%H:%M')}-#{shift.end.strftime('%H:%M')}", "/shifts/#{shift.id}" %>
+		</div>
+		<div class="col-sm-4">
+			Total Hours: <%= shift.total %>
+		</div>
+		<div class="col-sm-4">
+			<%= User.find(shift.user_id).full_name %>
+		</div>
+		<div class="col-sm-6">
+			<%= link_to 'Take This Shift', "/shifts/#{shift.id}/takeShifts", class:"btn btn-danger" %>
+		</div>
+	<% end %>
+	</div>
+<% end %> 
+
+

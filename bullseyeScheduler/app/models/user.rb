@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
 	has_many :shift
 	belongs_to :role
+	before_save :set_role
 
   has_secure_password
 	validates_uniqueness_of :email
@@ -58,9 +59,13 @@ class User < ActiveRecord::Base
 		"WY"
 	]
 
+	def full_name 
+		return "#{self.last_name}, #{self.first_name}"
+	end 
+
+	def set_role
+		self.role_id = 1
+	end 
+
+
 end
-
-
-
-
-

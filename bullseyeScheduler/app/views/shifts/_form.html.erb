@@ -1,0 +1,56 @@
+	<%= form_for(@shift) do |f| %>
+  	<% if @shift.errors.any? %>
+    	<div id="error_explanation">
+      	<h2><%= pluralize(@shift.errors.count, "error") %> prohibited this shift from being saved:</h2>
+
+      	<ul>
+      		<% @shift.errors.full_messages.each do |message| %>
+        		<li><%= message %></li>
+      		<% end %>
+      	</ul>
+    	</div>
+  	<% end %>
+		<table class="table">
+			<tr class="panel panel-danger field">
+				<td class="panel-heading">
+					<strong>Shift Date:</strong>
+				</td>
+				<td>
+		    	<%= f.date_select :shift_date %>
+				</td>
+			</tr>
+			<tr class="panel panel-danger field">
+				<td class="panel-heading">
+					<strong>Start:</strong>
+				</td>
+				<td>
+					<%= f.time_select :start , :minute_step => 15%>
+  			</td>
+			</tr>
+			<tr class="panel panel-danger field">
+				<td class="panel-heading">
+					<strong>End:</strong>
+				</td>
+				<td>
+					<%= f.time_select :end , :minute_step => 15%>
+				</td>
+			</tr>
+			<tr class="panel panel-danger field">
+					<td class="panel-heading">
+						<strong>Employee:</strong>
+					</td>
+					<td>
+						<%= f.select :user_id, options_for_select(User.all.map{|x| [x.first_name, x.id] }) %>
+					</td>
+			</tr>
+			<tr class="panel panel-danger field">
+					<td class="panel-heading">
+						<strong>Status:</strong>
+					</td>
+					<td>
+						<%= f.select :current_status, options_for_select(Shift::STATUS.map{|x| x }) %>
+					</td>
+			</tr>
+	</table>
+<%= submit_tag "Submit Shift", :class=>"btn btn-default" %>
+<% end %> 
