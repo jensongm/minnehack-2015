@@ -1,7 +1,71 @@
-<p>
-  <strong>Email:</strong>
-  <%= @user.email %>
-</p>
+<div class="panel panel-default">
+<div class="panel-heading">
+<h1 class="panel-title">User Profile</h1>
+</div>
 
-<%= link_to 'Edit', edit_user_path(@user) %> |
-<%= link_to 'Back', users_path %>
+<div class="panel-body">
+	<table class="table">
+		<tr class="panel panel-danger">
+			<td class="panel-heading">
+				<strong>Name:</strong>
+			</td>
+			<td>
+				<%= @user.first_name %> <%= @user.middle_name %> <%= @user.last_name %>
+			</td>	
+		</tr>
+		<tr class="panel panel-danger">
+			<td class="panel-heading">
+				<strong>Email Address:</strong>
+			</td>
+			<td>
+				<%= @user.email %>
+			</td>
+		</tr>
+		<tr class="panel panel-danger">
+			<td class="panel-heading">
+				<strong>Home Address:</strong>
+			</td>
+			<td>
+				<%= @user.home_address %>
+			</td>
+		</tr>
+		<tr class="panel panel-danger">
+			<td class="panel-heading">
+				<strong>Role:</strong>
+			</td>
+			<td>
+				<%= @user.role_id %>
+			</td>
+		</tr>
+		<tr class="panel panel-danger">
+			<td class="panel-heading">
+				<strong>HomeStore:</strong>
+			</td>
+			<td>
+				<%= @user.home_store_id %>
+		</tr>
+		<tr class="panel panel-danger">
+			<td class="panel-heading">
+				<strong>
+					Created at:
+				</strong>
+			</td>
+			<td>
+				<%= @user.created_at %>
+			</td>
+		</tr>
+		<tr class="panel panel-danger">
+			<td class="panel-heading">
+				<strong>
+					Updated at:
+				</strong>
+			</td>
+			<td>
+				<%= @user.updated_at %>
+			</td>
+		</tr>
+	</table>
+<%= link_to 'Edit User', edit_user_path(@user), :class=>"btn btn-default" %>
+<%= link_to 'Previous Page', users_path, :class=>"btn btn-default" %>
+</div>
+</div>

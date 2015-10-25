@@ -1,9 +1,19 @@
-<%= form_tag '/login' do %>
-<h1>Login</h1>
-<center><%= image_tag "bullseye.png" %></center>
-
-					<%= text_field_tag :email, nil, id: "email", type: "email", class: "form-control form-signin", placeholder: "Email Address"  %>
-					<%= password_field_tag :password, nil, id: "inputPassword", type: "password", class: "form-control form-signin", placeholder: "Password" %>
-					<%= submit_tag "Sign in", :class=>"btn btn-lg btn-danger btn-block" %>
-
-<% end %>
+<style>
+body{
+background-color: black;
+}
+</style>
+	<center><%= image_tag "bullseye.png" %></center>
+<div class="row">
+	<div class="col-sm-4"></div>
+	<div class="col-sm-4">
+	<%= form_tag '/login' do %>
+	
+						<%= text_field_tag :email, nil, id: "email", type: "email", class: "form-control form-signin", placeholder: "Email Address"  %>
+						<%= password_field_tag :password, nil, id: "inputPassword", type: "password", class: "form-control form-signin", placeholder: "Password" %>
+						<%= submit_tag "Sign in", :class=>"btn btn-lg btn-danger btn-block" %>
+	
+	<% end %>
+	</div>
+	<div class="col-sm-4"></div>
+</div>

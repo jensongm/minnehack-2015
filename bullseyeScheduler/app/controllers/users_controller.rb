@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 	require 'open-uri'
+	require 'net/http'
 
   # GET /users
   # GET /users.json
@@ -20,6 +21,7 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   def edit
+		@roles = Role.all
   end
 
   # POST /users
@@ -61,13 +63,16 @@ class UsersController < ApplicationController
       format.json { head :no_content }
     end
   end
-
+	# GET
 	def homestore
-		@location = Nokogiri::XML(open("http://api.target.com/v2/location?adminarea=#{params[:location]}&key=#{$key}"))
+		xml_content = Net::HTTP.get(URI.parse("http://api.target.com/v2/location?adminarea=#{params[:location]}&key=#{$key}"))
+		@data = Hash.from_xml(xml_content)		
 	end
-
+	# POST
 	def sethomestore
-
+		current_user.home_store_id = params[:store]
+		current_user.save
+		redirect_to '/'
 	end
 
   private
@@ -78,6 +83,6 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:email, :password, :password_confirmation)
+      params.require(:user).permit!
     end
 end

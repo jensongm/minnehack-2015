@@ -1,1 +1,13 @@
-<%= @location %>
+<h1>Please Select Your HomeStore</h1>
+<hr>
+<div class="row">
+	<% @data["Locations"]["Location"].each do |store| %>
+	<div class="col-sm-4">
+		<h3><%= store["Name"] %> </h3>
+		<h4><%= store["Address"]["AddressLine1"] %> </h4>
+		<h4><%= store["Address"]["City"] %> </h4>
+		<%= link_to "Select Store", "/users/#{current_user.id}/setstore?"+{store:"#{store["ID"]}"}.to_param, class:"btn btn-lg btn-danger" %>
+	</div>
+	
+	<% end %>
+</div>

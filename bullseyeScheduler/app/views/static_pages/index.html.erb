@@ -1,13 +1,51 @@
-<h1>Welcome - <%= current_user.email %></h1>
+<div class="row">
+	<div class="col-sm-6">
+		<h1>Welcome - <%= current_user.first_name %> <%= current_user.last_name%></h1>
+	</div>
+	<div class="col-sm-6">
+		<% if current_user.role == nil %> 
+		<h1>Role: N/A</h1>
+		<% else %>
+		<h1>Role:<%= Role.find(current_user.role).name %></h1>
+		<% end %>
+	</div>
+</div>
+<hr> 
+<div class="btn-group">
+	<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">Choose HomeStore</button>
+  <ul class="dropdown-menu scrollable-menu" role="menu">
+		<% @state.each do |s| %> 
+			<li><%= link_to s,"/users/#{current_user.id}/home/#{s}" %> </li>
+		<% end %> 
+	</ul>
+</div>
 
 <p>You've reached the homepage for Bullseye Scheduler!</p>
-
-
 <div class="row">
 	<div class="col-sm-6 well">
 		<h3>Your Shifts</h3>
+		<hr>
+		<% if current_user.shift.length <= 0 %> 
+			<h5 class="alert alert-danger">No Shifts Found</h5> 
+		<% else %> 
+			
+		<% end %> 
+
 	</div>
 	<div class="col-sm-6 well">
-		<h3>Home Store</h3> 
+		<h3>Home Store</h3>
+		<hr>
+		<% if current_user.home_store_id == nil %> 
+			<h5 class="alert alert-danger">No Home Store Set</h5> 
+		<% else %> 
+			<h5><%= @data["Location"]["Name"] %></h5>
+			<u>Address</u>
+			<br>
+			<%= @data["Location"]["Address"]["FormattedAddress"] %>
+			<br>
+			<u>Phone</u>
+			<br>
+			<%= @data["Location"]["TelephoneNumber"] ? @data["Location"]["TelephoneNumber"].first["PhoneNumber"] : "N/A" %>
+		<% end %> 
 	</div>
 </div>
