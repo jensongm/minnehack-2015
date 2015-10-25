@@ -11,13 +11,30 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151025021501) do
+ActiveRecord::Schema.define(version: 20151025034134) do
+
+  create_table "shifts", force: :cascade do |t|
+    t.time     "start"
+    t.time     "end"
+    t.integer  "total"
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "email"
     t.string   "password_digest"
+    t.string   "first_name"
+    t.string   "middle_name"
+    t.string   "last_name"
+    t.string   "home_address"
+    t.string   "home_phone"
+    t.string   "cell_phone"
+    t.datetime "dob"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
+    t.integer  "home_store_id"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

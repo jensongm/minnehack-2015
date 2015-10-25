@@ -4,6 +4,8 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 	before_filter :authorize
 	helper_method :current_user	
+	# Global API key for Target
+	$key = 'Id8SS1KAXuFd2W7R60XC5AUTTGKbnU2U'
 
 	def authorize
     redirect_to '/login' unless current_user

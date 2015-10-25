@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
 
-  resources :users
+  resources :users do
+		get '/home/:location' => 'users#homestore'
+	end 
   root 'static_pages#index'
   get 'static_pages/index'
   get 'static_pages/about'

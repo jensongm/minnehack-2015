@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
+	require 'open-uri'
 
   # GET /users
   # GET /users.json
@@ -60,6 +61,14 @@ class UsersController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+	def homestore
+		@location = Nokogiri::XML(open("http://api.target.com/v2/location?adminarea=#{params[:location]}&key=#{$key}"))
+	end
+
+	def sethomestore
+
+	end
 
   private
     # Use callbacks to share common setup or constraints between actions.
