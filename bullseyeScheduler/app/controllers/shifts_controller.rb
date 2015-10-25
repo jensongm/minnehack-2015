@@ -57,7 +57,7 @@ class ShiftsController < ApplicationController
 	def takeShift
 		@shift = Shift.find(params[:shift_id])
 		@shift.user_id = current_user.id
-		@shift.current_status = "General"
+		@shift.current_status = "Pending"
 		@shift.save
 		redirect_to root_url
 	end 

@@ -50,7 +50,7 @@
 	<div class="col-sm-6 well">
 		<h3>Home Store</h3>
 		<hr>
-		<% if current_user.home_store_id == nil || 0 %> 
+		<% if current_user.home_store_id == nil || current_user.home_store_id == 0 %> 
 			<h5 class="alert alert-danger">No Home Store Set</h5> 
 		<% else %> 
 			<h5><%= @data["Location"]["Name"] %></h5>
@@ -78,4 +78,41 @@
 		</p>
 </div>
 </div>
+<% if current_user.role.id != 1 %> 
+<div class="row">
+	<div class="col-sm-12 well">
+		<h3>Manage Store Shifts - <%= @manShifts.length %></h3>
+		<hr>
+		<% if @manShifts.length <= 0 %> 
+			<h5 class="alert alert-danger">No Shifts Found</h5> 
+		<% else %> 
+				<% @manShifts.each do |shift| %>
+						<% if shift.current_status == "General" %>
+						<div class= "text-success">
+						<%= link_to "#{shift.shift_date.strftime('%F')}			#{shift.start.strftime('%H:%M')}-#{shift.end.strftime('%H:%M')}", "/shifts/#{shift.id}" %>
+						<br/>Current Status: <%= shift.current_status %> 
+						<% elsif shift.current_status == "Open" %>
+						<div class= "text-primary">
+						<%= link_to "#{shift.shift_date.strftime('%F')}			#{shift.start.strftime('%H:%M')}-#{shift.end.strftime('%H:%M')}", "/shifts/#{shift.id}" %>
+						<br/>Current Status: <%= shift.current_status %> 
+						<% elsif shift.current_status == "Pending" %>
+						<div class= "text-warning">
+						<%= link_to "#{shift.shift_date.strftime('%F')}			#{shift.start.strftime('%H:%M')}-#{shift.end.strftime('%H:%M')}", "/shifts/#{shift.id}" %>
+						<br/>Current Status: <%= shift.current_status %> 
+						<% elsif shift.current_status == "Closed" %>
+						<div class= "text-danger">
+						<%= link_to "#{shift.shift_date.strftime('%F')}			#{shift.start.strftime('%H:%M')}-#{shift.end.strftime('%H:%M')}", "/shifts/#{shift.id}" %>
+						<br/>Current Status: <%= shift.current_status %> 
+						<% elsif shift.current_status == "Finalized" %>
+						<div>
+						<%= link_to "#{shift.shift_date.strftime('%F')}			#{shift.start.strftime('%H:%M')}-#{shift.end.strftime('%H:%M')}", "/shifts/#{shift.id}" %>
+						<br/>Current Status: <%= shift.current_status %> 
+						<% end %>
+						</div>
+						<br />
+				<% end %> 
+		<% end %> 
 
+	</div>
+</div>
+<% end %>
