@@ -1,10 +1,11 @@
 class User < ActiveRecord::Base
 	has_many :shift
 	belongs_to :role
-	before_save :set_role
+	before_create :set_role
 
   has_secure_password
 	validates_uniqueness_of :email
+	validates_presence_of	:home_store_id
 	#State Locations
 	LOCATIONS = [
 		"AL",
@@ -65,6 +66,7 @@ class User < ActiveRecord::Base
 
 	def set_role
 		self.role_id = 1
+		self.home_store_id = 0
 	end 
 
 

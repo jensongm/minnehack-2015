@@ -1,4 +1,4 @@
-<h1>Listing All Current Shifts</h1>
+<h1>View All Current Shifts</h1>
 
 <table class="table">
   <thead class="panel panel-danger">
@@ -6,7 +6,7 @@
       <th>Date</th>
       <th>Start</th>
       <th>End</th>
-      <th>Total</th>
+      <th>Total Hours</th>
       <th>User</th>
       <th colspan="3"></th>
     </tr>
@@ -19,10 +19,10 @@
         <td><%= shift.start.strftime('%H:%M') %></td>
         <td><%= shift.end.strftime('%H:%M') %></td>
         <td><%= shift.total %></td>
-        <td><%= shift.user_id %></td>
+        <td><%= User.find(shift.user_id).full_name %></td>
         <td><%= link_to 'Show Shift', shift, :class=>"btn btn-default" %></td>
         <td><%= link_to 'Edit Shift', edit_shift_path(shift), :class=>"btn btn-default" %></td>
-        <td><%= link_to 'Remove', shift, method: :delete, data: { confirm: 'Are you sure?' }, :class=>"btn btn-default" %></td>
+        <td><%= button_to 'Remove', shift, method: :delete, :onclick => "return confirm('Are you sure you want to delete this Shift?')", :class=>"btn btn-default" %></td>
       </tr>
     <% end %>
   </tbody>

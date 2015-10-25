@@ -1,10 +1,18 @@
-<h1>Hours This year for: <%= @user.full_name%></h1>
+<h1>Employee stats for: <%= @user.full_name%></h1>
 <hr>
-<canvas id="hours_track" width="400" height="400"></canvas>
-<% total = Shift.where(user_id:@user.id).map{|x| x.total} %>
-<% total = total.inject{|sum,x| sum + x } %>
-<div id="hours"class="well">
-
+<div class="row">
+	<div class="col-sm-6">
+		<canvas id="hours_track" width="400" height="400"></canvas>
+		<% total = Shift.where(user_id:@user.id).map{|x| x.total} %>
+		<% total = total.inject{|sum,x| sum + x } %>
+		<div id="hours"class="well">
+		</div>
+	</div>
+	<div class="col-sm-6">
+		<canvas id="hours_paid" width="400" height="400"></canvas>
+		<div id="hourspaid"class="well">
+		</div>
+	</div>
 </div>
 <script>
 	var hourData = {
@@ -26,7 +34,29 @@
 	var totalHours = data.reduce(function(a, b) {
 		return a + b;
 	});	
-	$('#hours').html("Total Hours: "+ totalHours);
+	$('#hours').html("Total Hours: "+ totalHours +"<br/> Avg Number of Hours: " + (totalHours/12).toFixed(2));
+
+	var paidData = {
+		labels: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+		datasets : [
+			{
+				fillColor: "rgba(228,185,185,1)",
+				strokeColor: "#D12828",
+				pointColor: "#fff",
+				pointStrokeColor: "#D12828",
+				data: [160.35*9,156.76*9,120.23*9,172.34*9,145.34*9,147.45*9,120.58*9,146.78*9,157.66*9,<%= total.to_i %> * 9,0,0]
+			}
+		] 
+
+	}
+	
+	var rateChart = document.getElementById("hours_paid").getContext('2d');
+	new Chart(rateChart).Bar(paidData);
+	data = [160.35*9,156.76*9,120.23*9,172.34*9,145.34*9,147.45*9,120.58*9,146.78*9,157.66*9,<%= total.to_i %> * 9,0,0];
+	var totalMade = data.reduce(function(a, b) {
+		return a + b;
+	});
+	$('#hourspaid').html("Year-to-Date Total Made: $" + totalMade + "<br/> Hourly Rate: $9.00<br/> Before Taxes: $" + totalMade * 9 + " <br /> Tax Rate: 7.65% <br />Year-to-Date After Taxes: $" + (totalMade * 9 * .0765).toFixed(2));
 
 </script>
 

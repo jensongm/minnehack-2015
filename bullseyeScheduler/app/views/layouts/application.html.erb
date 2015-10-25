@@ -16,6 +16,7 @@
 <body role="document">
 
   <!-- Fixed navbar -->
+		<% if current_user %>
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
@@ -48,6 +49,7 @@
         </div><!--/.nav-collapse -->
       </div>
     </nav>
+		<% end %>
 		<div id="buffer">
 		</div>
 		<center>

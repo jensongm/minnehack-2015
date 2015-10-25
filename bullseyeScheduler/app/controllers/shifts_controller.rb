@@ -25,6 +25,7 @@ class ShiftsController < ApplicationController
   # POST /shifts.json
   def create
     @shift = Shift.new(shift_params)
+		@shift.store_id = current_user.home_store_id
 		@shift.total = ((@shift.end - @shift.start) / 1.hour).round
     respond_to do |format|
       if @shift.save
